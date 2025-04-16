@@ -1,0 +1,23 @@
+void setup()
+{
+  pinMode(13, OUTPUT);//red
+  pinMode(12, OUTPUT);//yellow
+  pinMode(11, OUTPUT);//green
+  
+}
+
+void loop()
+{
+  digitalWrite(13, HIGH);
+  delay(400); 
+  digitalWrite(13, LOW);
+  delay(400);
+  digitalWrite(12, HIGH);
+  delay(400); 
+  digitalWrite(12, LOW);
+  delay(400);
+  digitalWrite(11, HIGH);
+  delay(400); 
+  digitalWrite(11, LOW);
+  delay(400);
+}
