@@ -1,0 +1,41 @@
+#include <Servo.h>
+#include <Adafruit_LiquidCrystal.h>
+
+int pos=0;
+
+Servo servo;
+Adafruit_LiquidCrystal lcd(0);
+
+void setup()
+{
+  pinMode(A0, INPUT);
+  pinMode(2,OUTPUT);
+  servo.attach(9,500,2500);
+  lcd.begin(16, 2);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  Serial.println(analogRead(A0));
+  delay(1000);
+  
+  if(analogRead(A0)>400)
+  {
+    servo.write(90);      //opens the window
+    digitalWrite(2,HIGH);
+    lcd.setCursor(0,0);
+    lcd.print("Warning    ");
+    lcd.setCursor(0,1);
+    lcd.print("Smoke detected");  }
+  else
+  {
+    servo.write(0);
+    digitalWrite(2,LOW);
+    lcd.setCursor(0,0);
+    lcd.print("No Problem");
+    lcd.setCursor(0,1);
+    lcd.print("All safe         ");
+    
+  } 
+}
