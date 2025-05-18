@@ -1,0 +1,56 @@
+#include <Wire.h>
+#include <Adafruit_LiquidCrystal.h>
+
+// Use appropriate I2C address for your LCD. Try 0 or 0x20-0x27
+Adafruit_LiquidCrystal lcd(0);  // Adjust address as needed
+
+const int forceSensorPin = A0;
+const int potPin = A1;
+const int ledPin = 3;
+const int buzzerPin = 2;
+
+void setup() {
+  pinMode(forceSensorPin, INPUT);
+  pinMode(potPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+
+  lcd.begin(16, 2);       // Initialize 16x2 LCD
+  lcd.setBacklight(1);    // Turn on backlight
+
+  Serial.begin(9600);
+  lcd.setCursor(0, 0);
+  lcd.print("Anti-Theft Sys");
+  delay(1500);
+  lcd.clear();
+}
+
+void loop() {
+  int forceValue = analogRead(forceSensorPin);
+  int threshold = analogRead(potPin);
+
+  Serial.print("Force: ");
+  Serial.print(forceValue);
+  Serial.print(" | Threshold: ");
+  Serial.println(threshold);
+
+  if (forceValue > threshold) {
+    digitalWrite(ledPin, HIGH);
+    digitalWrite(buzzerPin, HIGH);
+
+    lcd.setCursor(0, 0);
+    lcd.print("!! ALERT !!      ");
+    lcd.setCursor(0, 1);
+    lcd.print("Intruder Found! ");
+  } else {
+    digitalWrite(ledPin, LOW);
+    digitalWrite(buzzerPin, LOW);
+
+    lcd.setCursor(0, 0);
+    lcd.print("Monitoring...    ");
+    lcd.setCursor(0, 1);
+    lcd.print("All Safe        ");
+  }
+
+  delay(500);
+}
