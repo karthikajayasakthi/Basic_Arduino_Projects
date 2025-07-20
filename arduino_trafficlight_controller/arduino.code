@@ -1,0 +1,38 @@
+void setup() {
+  pinMode(13, OUTPUT);        // Red LED
+  pinMode(12, OUTPUT);        // Yellow LED
+  pinMode(8, OUTPUT);         // Green LED
+  pinMode(2, INPUT_PULLUP);   // Pushbutton with internal pull-up
+}
+
+void loop() {
+  // Check if the button is pressed
+  if (digitalRead(2) == LOW) {  // Button is pressed (LOW due to pull-up)
+
+    // Red light ON
+    digitalWrite(13, HIGH);
+    digitalWrite(12, LOW);
+    digitalWrite(8, LOW);
+    delay(3000);
+
+    // Green light ON
+    digitalWrite(13, LOW);
+    digitalWrite(12, LOW);
+    digitalWrite(8, HIGH);
+    delay(3000);
+
+    // Yellow light ON
+    digitalWrite(13, LOW);
+    digitalWrite(12, HIGH);
+    digitalWrite(8, LOW);
+    delay(2000);
+
+    // Turn all lights OFF
+    digitalWrite(13, LOW);
+    digitalWrite(12, LOW);
+    digitalWrite(8, LOW);
+
+    // Optional: wait until button is released to avoid retriggering
+    while (digitalRead(2) == LOW);
+  }
+}
